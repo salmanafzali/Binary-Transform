@@ -13,67 +13,44 @@ class Converting:
         for i in range(10, 16):
             if number == i:
                 return more_ten[number - 10]
+            
+    def integer_convert(self, number, base):
+        result = []
+        
+        basis = int(number)
+        while True:
+            division = int(basis / base)
+            remaining = int(basis % base)
+
+            basis = division
+
+            if remaining <= 9:
+                result.append(remaining)
+            else:
+                more = self.more(remaining)
+                result.append(more)
+
+            if division < base:
+                if division <= 9:
+                    result.append(division)
+                    break
+                else:
+                    more = self.more(division)
+                    result.append(more)
+                    break
+            
+        return " ".join(str(num) for num in result[::-1])
 
     def decimal_integer(self, number):
-        basis_2 = []
-        basis_8 = []
-        basis_16 = []
-
         check_decimal = number % 1
         if str(check_decimal)[2] == "0":
-            basis_2_num = int(number)
-            while True:
-                division = int(basis_2_num / 2)
-                remaining = int(basis_2_num % 2)
-
-                basis_2.append(remaining)
-
-                basis_2_num = division
-
-                if division < 2:
-                    basis_2.append(division)
-                    break
-
-            basis_8_num = int(number)
-            while True:
-                division = int(basis_8_num / 8)
-                remaining = int(basis_8_num % 8)
-
-                basis_8.append(remaining)
-
-                basis_8_num = division
-
-                if division < 8:
-                    basis_8.append(division)
-                    break
-
-            basis_16_num = int(number)
-            while True:
-                division = int(basis_16_num / 16)
-                remaining = int(basis_16_num % 16)
-
-                basis_16_num = division
-
-                if remaining <= 9:
-                    basis_16.append(remaining)
-                else:
-                    more = self.more(remaining)
-                    basis_16.append(more)
-
-                if division < 16:
-                    if division <= 9:
-                        basis_16.append(division)
-                        break
-                    else:
-                        more = self.more(division)
-                        basis_16.append(more)
-                        break
-
-            b_2 = " ".join(str(num) for num in basis_2[::-1])
-            b_8 = " ".join(str(num) for num in basis_8[::-1])
-            b_16 = " ".join(str(num) for num in basis_16[::-1])
-
-            return b_2, b_8, b_16
+            int_number = int(number)
+            
+            base_2 = self.integer_convert(int_number, 2)      # basis 2 converting
+            base_8 = self.integer_convert(int_number, 8)      # basis 8 converting
+            base_16 = self.integer_convert(int_number, 16)      # basis 16 converting
+            
+            return base_2, base_8, base_16
 
         else:
             print("True")
