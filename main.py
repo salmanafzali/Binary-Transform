@@ -40,35 +40,68 @@ class Converting:
                     break
             
         return " ".join(str(num) for num in result[::-1])
+    
+    def decimal_convert(self, number, base):
+        result = []
+        
+        flt_number = number % 1
+        for i in range(4):
+            mult = flt_number * base
+            
+            flt_number = mult % 1
+            
+            if int(mult) <= 9:
+                result.append(int(mult))
+            else:
+                more = self.more(int(mult))
+                result.append(more)
+
+        return " ".join(str(num) for num in result[::-1])
+            
 
     def decimal_integer(self, number):
         check_decimal = number % 1
         if str(check_decimal)[2] == "0":
-            int_number = int(number)
-            
-            base_2 = self.integer_convert(int_number, 2)      # basis 2 converting
-            base_8 = self.integer_convert(int_number, 8)      # basis 8 converting
-            base_16 = self.integer_convert(int_number, 16)      # basis 16 converting
+            base_2 = self.integer_convert(number, 2)      # basis 2 converting
+            base_8 = self.integer_convert(number, 8)      # basis 8 converting
+            base_16 = self.integer_convert(number, 16)      # basis 16 converting
             
             return base_2, base_8, base_16
 
         else:
-            print("True")
+            # basis 2 converting
+            base_2_int = self.integer_convert(number, 2)
+            base_2_flt = self.decimal_convert(number, 2)
+            base_2_decimal = base_2_int + " / " + base_2_flt
+            
+            # basis 8 converting
+            base_8_int = self.integer_convert(number, 8)
+            base_8_flt = self.decimal_convert(number, 8)
+            base_8_decimal = base_8_int + " / " + base_8_flt
+            
+            # basis 16 converting
+            base_16_int = self.integer_convert(number, 16)
+            base_16_flt = self.decimal_convert(number, 16)
+            base_16_decimal = base_16_int + " / " + base_16_flt
+        
+            
+            return base_2_decimal, base_8_decimal, base_16_decimal
 
 
 def dec_int():
     convert = Converting()
+    
     try:
         number = float(dec_int_number.get())
+        base_2, base_8, base_16 = convert.decimal_integer(number)
+
+        input_num_show.config(text=int(number))
+        conv_2_show.config(text=base_2)
+        conv_8_show.config(text=base_8)
+        conv_16_show.config(text=base_16)
+        
     except ValueError:
         messagebox.showerror("ارور", "لطفا مقدار عدد صحیح را درست وارد کنید")
-
-    base_2, base_8, base_16 = convert.decimal_integer(number)
-
-    input_num_show.config(text=int(number))
-    conv_2_show.config(text=base_2)
-    conv_8_show.config(text=base_8)
-    conv_16_show.config(text=base_16)
 
 
 def binary():
