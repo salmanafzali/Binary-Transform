@@ -69,8 +69,7 @@ class Converting:
         if str(check_decimal)[2] == "0":
             base_2 = self.integer_convert(number, 2)      # basis 2 converting
             base_8 = self.integer_convert(number, 8)      # basis 8 converting
-            base_16 = self.integer_convert(
-                number, 16)      # basis 16 converting
+            base_16 = self.integer_convert(number, 16)      # basis 16 converting
 
             return base_2, base_8, base_16
 
@@ -91,55 +90,55 @@ class Converting:
             base_16_decimal = base_16_int + " / " + base_16_flt
 
             return base_2_decimal, base_8_decimal, base_16_decimal
-  
-        
-    # select operation for basis 8 select
-    def basis_8(self, number):
-        pass
 
-    # select operation for basis 16 select
-    def basis_16(self, number):
-        pass
 
     # check value and select operation on base seleced
-    def basis(self, number,  base):
+    def basis(self, number, base):
         base = int(base)
 
         if base == 2:
             try:
                 result = []
-        
+
                 b_10 = int(number, 2)              # basis 10 result
-                
+
                 result.append(b_10)
                 result.append(oct(b_10)[2:])       # basis 8 result
                 result.append(hex(b_10)[2:])       # basis 16 result
-                
+
                 print(result)
-                
+
                 return result
             except:
                 return "Basis 2 Error"
 
         elif base == 8:
             try:
-                int(number)
+                list_basis = []
+                decimal = int(number, 8)                                       # basis 10 result
+                
+                list_basis.append(decimal)
+                list_basis.append(self.integer_convert(decimal, base=2))       # basis 2 result
+                list_basis.append(" ".join(hex(decimal)[2:]))                  # basis 16 result
+                
+                return list_basis
+            
             except:
                 return "Basis 8 Error"
 
         elif base == 16:
-            check_list = string.ascii_uppercase[0:6]
-            check_list += "0123456789"
-            check = True
-
-            for i in number:
-                if not i.upper() in check_list:
-                    check = False
-
-            if check == False:
+            try:
+                list_basis = []
+                decimal = int(number, 16)                                      # basis 10 result
+                
+                list_basis.append(decimal)
+                list_basis.append(self.integer_convert(decimal, base=2))       # basis 2 result
+                list_basis.append(" ".join(oct(decimal)[2:]))                  # basis 16 result
+            
+                return list_basis
+            except:
                 return "Basis 16 Error"
 
-            print(number)
 
         else:
             return "Unknown"
@@ -162,8 +161,6 @@ def dec_int():
         messagebox.showerror("ارور", "لطفا مقدار عدد صحیح را درست وارد کنید")
 
 # check the vinary entry value
-
-
 def basis():
     convert = Converting()
 
@@ -178,16 +175,14 @@ def basis():
             result = convert.basis(number=bin_num, base=base)
 
             if result == "Basis 2 Error":
-                messagebox.showerror(
-                    "ارور", "لطفا در وارد کردن مقدار باینری دقت کنید")
+                messagebox.showerror("ارور", "لطفا در وارد کردن مقدار باینری دقت کنید")
 
             elif result == "Basis 8 Error":
-                messagebox.showerror(
-                    "ارور", "لطفا در وارد کردن مقدار اکتال دقت فرمایید")
+                messagebox.showerror("ارور", " لطفا در وارد کردن مقدار اکتال دقت فرمایید \n \n (نمیتواند عددی بیشتر از 7 وجود داشته باشد)")
 
             elif result == "Basis 16 Error":
                 messagebox.showerror("ارور", f"مقدار هگزادسمیال نمیتواند بیشتر از اف بیشتر باشد")
-            
+
             # show result after correct value
             else:
                 # show result in basis 2 select
@@ -195,92 +190,91 @@ def basis():
                     conv_2_base_show["text"] = "انتخاب شده است"
                     conv_10_base_show["text"] = " ".join(str(result[0]))
                     conv_8_base_show["text"] = " ".join(str(result[1]))
-                    conv_16_base_show["text"] = " ".join(str(result[2])) 
-                
-                
-             
+                    conv_16_base_show["text"] = " ".join(str(result[2]))
 
+                # show result in basis 8 select
+                elif base == "8":
+                    conv_8_base_show["text"] = "انتخاب شده است"
+                    conv_10_base_show["text"] = " ".join(str(result[0]))
+                    conv_2_base_show["text"] = "".join(str(result[1]))
+                    conv_16_base_show["text"] = " ".join(str(result[2]))
+                
+                # show result in basis 16 select
+                elif base == "16":
+                    conv_16_base_show["text"] = "انتخاب شده است"
+                    conv_10_base_show["text"] = " ".join(str(result[0]))
+                    conv_2_base_show["text"] = "".join(str(result[1]))
+                    conv_8_base_show["text"] = " ".join(str(result[2]))
+                
+                
     else:
         messagebox.showerror("ارور", "لطفا مقداری مبنایی را وارد کنید")
 
 
 # create frontend
 window = tk.Tk()
-window.geometry('600x500')
+window.geometry('750x550')
 window.title("تبدیل مبنا")
-window.maxsize(600, 500)
+window.maxsize(750, 550)
 
 # upload image
-main_img = PhotoImage(file="Untitled-1.png")
+main_img = PhotoImage(file="background.png")
 Label(window, image=main_img).place(x=0, y=0)
 
 # show converting base 10 integer number
-input_num = tk.Label(window, text="عدد وارد شده = ",
-                     bg='#1E90FF', font=font.Font(size=12, weight='bold'))
+input_num = tk.Label(window, text="عدد وارد شده = ",bg='#FFFFFF', font=font.Font(size=12, weight='bold'))
 input_num.place(x=30, y=30)
-input_num_show = tk.Label(window, text="", bg='#1E90FF', font=("", "13"))
+input_num_show = tk.Label(window, text="", bg='#FFFFFF', font=("", "13"), wraplength=275)
 input_num_show.place(x=123, y=30)
 
-conv_2 = tk.Label(window, text="تبدیل به 2 = ", bg='#1E90FF',
-                  font=font.Font(size=12, weight='bold'))
-conv_2.place(x=47, y=80)
-conv_2_show = tk.Label(window, text="", bg='#1E90FF',
-                       font=("", "13"), wraplength=230)
-conv_2_show.place(x=122, y=80)
+conv_2 = tk.Label(window, text="تبدیل به 2 = ", bg='#FFFFFF', font=font.Font(size=12, weight='bold'))
+conv_2.place(x=47, y=110)
+conv_2_show = tk.Label(window, text="", bg='#FFFFFF', font=("", "13"), wraplength=275)
+conv_2_show.place(x=122, y=110)
 
-conv_8 = tk.Label(window, text="تبدیل به 8 = ", bg='#E0E0E0',
-                  font=font.Font(size=12, weight='bold'))
-conv_8.place(x=47, y=130)
-conv_8_show = tk.Label(window, text="", bg='#E0E0E0', font=("", "13"))
-conv_8_show.place(x=122, y=130)
+conv_8 = tk.Label(window, text="تبدیل به 8 = ", bg="#E0E0E0", font=font.Font(size=12, weight='bold'))
+conv_8.place(x=47, y=190)
+conv_8_show = tk.Label(window, text="", bg='#E0E0E0', font=("", "13"), wraplength=275)
+conv_8_show.place(x=122, y=190)
 
-conv_16 = tk.Label(window, text="تبدیل به 16 = ", bg='#E0E0E0',
-                   font=font.Font(size=12, weight='bold'))
-conv_16.place(x=39, y=180)
-conv_16_show = tk.Label(window, text="", bg='#E0E0E0', font=("", "13"))
-conv_16_show.place(x=123, y=180)
+conv_16 = tk.Label(window, text="تبدیل به 16 = ", bg='#E0E0E0', font=font.Font(size=12, weight='bold'))
+conv_16.place(x=39, y=270)
+conv_16_show = tk.Label(window, text="", bg='#E0E0E0', font=("", "13"), wraplength=275)
+conv_16_show.place(x=123, y=270)
 
 dec_int_number = Entry(window, font=("", "14"), background='darkblue')
-dec_int_number.place(x=30, y=250, width=170)
+dec_int_number.place(x=70, y=350, width=170)
 
 # show converting base other number
-conv_10_base = tk.Label(window, text="تبدیل به 10 = ",
-                        bg='#1E90FF', font=font.Font(size=12, weight='bold'))
-conv_10_base.place(x=354, y=30)
-conv_10_base_show = tk.Label(window, text="", bg='#1E90FF', font=("", "13"))
-conv_10_base_show.place(x=435, y=30)
+conv_10_base = tk.Label(window, text="تبدیل به 10 = ",bg='#FFFFFF', font=font.Font(size=12, weight='bold'))
+conv_10_base.place(x=404, y=30)
+conv_10_base_show = tk.Label(window, text="", bg='#FFFFFF', font=("", "13"), wraplength=265)
+conv_10_base_show.place(x=485, y=30)
 
-conv_2_base = tk.Label(window, text="تبدیل به 2 = ",
-                       bg='#1E90FF', font=font.Font(size=12, weight='bold'))
-conv_2_base.place(x=362, y=80)
-conv_2_base_show = tk.Label(
-    window, text="", bg='#1E90FF', font=("", "13"), wraplength=160)
-conv_2_base_show.place(x=435, y=80)
+conv_2_base = tk.Label(window, text="تبدیل به 2 = ",bg='#FFFFFF', font=font.Font(size=12, weight='bold'))
+conv_2_base.place(x=412, y=110)
+conv_2_base_show = tk.Label(window, text="", bg='#FFFFFF', font=("", "13"), wraplength=265)
+conv_2_base_show.place(x=485, y=110)
 
-conv_8_base = tk.Label(window, text="تبدیل به 8 = ",
-                       bg='#E0E0E0', font=font.Font(size=12, weight='bold'))
-conv_8_base.place(x=362, y=130)
-conv_8_base_show = tk.Label(window, text="", bg='#E0E0E0', font=("", "13"))
-conv_8_base_show.place(x=435, y=130)
+conv_8_base = tk.Label(window, text="تبدیل به 8 = ",bg='#E0E0E0', font=font.Font(size=12, weight='bold'))
+conv_8_base.place(x=412, y=190)
+conv_8_base_show = tk.Label(window, text="", bg='#E0E0E0', font=("", "13"), wraplength=265)
+conv_8_base_show.place(x=485, y=190)
 
-conv_16_base = tk.Label(window, text="تبدیل به 16 = ",
-                        bg='#E0E0E0', font=font.Font(size=12, weight='bold'))
-conv_16_base.place(x=354, y=180)
-conv_16_base_show = tk.Label(window, text="", bg='#E0E0E0', font=("", "13"))
-conv_16_base_show.place(x=435, y=180)
+conv_16_base = tk.Label(window, text="تبدیل به 16 = ",bg='#E0E0E0', font=font.Font(size=12, weight='bold'))
+conv_16_base.place(x=404, y=270)
+conv_16_base_show = tk.Label(window, text="", bg='#E0E0E0', font=("", "13"), wraplength=265)
+conv_16_base_show.place(x=485, y=270)
 
 binary_number = Entry(window, font=("", "14"))
-binary_number.place(x=345, y=250, width=170)
+binary_number.place(x=444, y=350, width=170)
 
 binary_select = tk.StringVar()
 binary_options = ["مبنا", "2", "8", "16"]
-OptionMenu(window, binary_select, *
-           binary_options).place(x=520, y=250, width=60)
+OptionMenu(window, binary_select, *binary_options).place(x=615, y=350, width=60)
 
 # Button Convert
-tk.Button(window, text="تبدیل عدد صحیح", command=dec_int, bg='#66b2ff').place(
-    x=50, y=330, width=120, height=50)
-tk.Button(window, text="تبدیل عدد مبنایی", command=basis, bg='#66b2ff').place(
-    x=370, y=330, width=120, height=50)
+tk.Button(window, text="تبدیل عدد صحیح", command=dec_int, bg='gray').place(x=90, y=400, width=120, height=50)
+tk.Button(window, text="تبدیل عدد مبنایی", command=basis, bg='gray').place(x=470, y=400, width=120, height=50)
 
 window.mainloop()
