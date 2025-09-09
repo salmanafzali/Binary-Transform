@@ -91,7 +91,6 @@ class Converting:
 
             return base_2_decimal, base_8_decimal, base_16_decimal
 
-
     # check value and select operation on base seleced
     def basis(self, number, base):
         base = int(base)
@@ -163,7 +162,6 @@ def dec_int():
 # check the vinary entry value
 def basis():
     convert = Converting()
-
     bin_num = binary_number.get()
     base = binary_select.get()
 
