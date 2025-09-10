@@ -142,7 +142,6 @@ class Converting:
         else:
             return "Unknown"
 
-
 # check the integer entry value
 def dec_int():
     convert = Converting()
@@ -220,6 +219,7 @@ main_img = PhotoImage(file="background.png")
 Label(window, image=main_img).place(x=0, y=0)
 
 # show converting base 10 integer number
+# (*_show for show result basis to label)
 input_num = tk.Label(window, text="عدد وارد شده = ",bg='#FFFFFF', font=font.Font(size=12, weight='bold'))
 input_num.place(x=30, y=30)
 input_num_show = tk.Label(window, text="", bg='#FFFFFF', font=("", "13"), wraplength=275)
