@@ -19,8 +19,6 @@ python main.py
 
 ## ساختار پروژه 
 
-binary transfrom
-|
-|____main.py             # فایل اصلی
-|____background.png      # عکس پس زمینه
-|____README.text         # همین فایل راهنما
+- main.py            # فایل اصلی 
+- background.png     # عکس پس زمینه برنامه
+- README.md          # همین فایل راهنما
